@@ -115,7 +115,6 @@ If you use DPVD in your research, please cite:
   title={DPVD: A Dataset and Benchmark for Dermoscopy-based Pediatric Vitiligo Diagnosis},
   author={Huang, Yue and Chen, Zhilin and Yu, Shijuan and Zhou, Kai and 
           Wang, Gang and Luo, Xiaoyan and Wang, Hua and Xiao, Yunpeng and Luo, Lei},
-  journal={Electronics},
   year={2026}
 }
 ```
