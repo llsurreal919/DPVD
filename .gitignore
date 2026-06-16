@@ -1,0 +1,82 @@
+# ── Python ──
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Virtual Environment ──
+venv/
+.venv/
+env/
+.env/
+
+# ── IDE ──
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── Jupyter / IPython ──
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Pytest ──
+.pytest_cache/
+.cache/
+
+# ── Data & Datasets (download separately) ──
+data/
+VOCdevkit/
+VOCdevkit1/
+dataset_spilt/
+newn*/dataset_spilt/
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tif
+*.tiff
+!paper/**/*.png
+!paper/**/*.jpg
+
+# ── Model Checkpoints & Weights (download separately) ──
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.hdf5
+*.weights
+*.onnx
+
+# ── Training Logs & Runs ──
+logs/
+runs/
+resultModels/
+beforeLogs/
+result/
+*.log
+
+# ── Expansion / Augmented Data ──
+expansion/
+
+# ── Model Data ──
+model_data/
+
+# ── OS Files ──
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ── Docker (keep only Dockerfile) ──
+docker-compose.override.yml
+
+# ── Misc ──
+*.aux
+*.bbl
+*.blg
+*.out
+*.log

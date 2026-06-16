@@ -1,0 +1,266 @@
+\documentclass[border=8pt, multi, tikz]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{3d} % for including external image
+
+\tikzset{
+	RightBandedBox/.pic={
+		\node[name=#1,
+		draw,
+		text width=\pgfkeysvalueof{/tikz/#1/width},
+		minimum height=\pgfkeysvalueof{/tikz/#1/height},
+		left color=yellow!50,
+		right color=red!50,
+		middle color=white,
+		shading angle=90,
+		anchor=center,
+		pic actions]
+		at (0,0) {#1};
+	},
+	Box/.pic={
+		\node[name=#1,
+		draw,
+		fill=#2,
+		minimum width=1cm,
+		minimum height=1cm,
+		pic actions]
+		at (0,0) {#1};
+	}
+}
+
+\begin{document}
+	\begin{tikzpicture}
+
+		\pic (conv1) {RightBandedBox={
+				name=conv1,
+				caption= ,
+				xlabel={{ 64, 64 }},
+				zlabel=500,
+				fill=yellow!50,
+				bandfill=red!50,
+				height=40,
+				width={ 2 , 2 },
+				depth=40
+			}
+		};
+
+		\pic[below=of conv1] (pool1) {Box={
+				name=pool1,
+				caption= ,
+				fill=red!50,
+				opacity=0.5,
+				height=32,
+				width=1,
+				depth=32
+			}
+		};
+
+		\pic[right=of pool1] (ccr_b2) {RightBandedBox={
+				name=ccr_b2,
+				caption= ,
+				xlabel={{ 128, 128 }},
+				zlabel=256,
+				fill=yellow!50,
+				bandfill=red!50,
+				height=32,
+				width={ 3.5 , 3.5 },
+				depth=32
+			}
+		};
+
+		\pic[below=of ccr_b2] (pool_b2) {Box={
+				name=pool_b2,
+				caption= ,
+				fill=red!50,
+				opacity=0.5,
+				height=24,
+				width=1,
+				depth=24
+			}
+		};
+
+		\draw[ultra thick] (pool1.east) -- (ccr_b2.west);
+
+		\pic[right=of ccr_b2] (ccr_b3) {RightBandedBox={
+				name=ccr_b3,
+				caption= ,
+				xlabel={{ 256, 256 }},
+				zlabel=128,
+				fill=yellow!50,
+				bandfill=red!50,
+				height=25,
+				width={ 4.5 , 4.5 },
+				depth=25
+			}
+		};
+
+		\pic[below=of ccr_b3] (pool_b3) {Box={
+				name=pool_b3,
+				caption= ,
+				fill=red!50,
+				opacity=0.5,
+				height=19,
+				width=1,
+				depth=19
+			}
+		};
+
+		\draw[ultra thick] (pool_b2.east) -- (ccr_b3.west);
+
+		\pic[right=of ccr_b3] (ccr_b4) {RightBandedBox={
+				name=ccr_b4,
+				caption= ,
+				xlabel={{ 512, 512 }},
+				zlabel=64,
+				fill=yellow!50,
+				bandfill=red!50,
+				height=16,
+				width={ 5.5 , 5.5 },
+				depth=16
+			}
+		};
+
+		\pic[below=of ccr_b4] (pool_b4) {Box={
+				name=pool_b4,
+				caption= ,
+				fill=red!50,
+				opacity=0.5,
+				height=12,
+				width=1,
+				depth=12
+			}
+		};
+
+		\draw[ultra thick] (pool_b3.east) -- (ccr_b4.west);
+
+		\pic[right=of pool_b4] (bottleneck) {RightBandedBox={
+				name=bottleneck,
+				caption=Bottleneck,
+				xlabel={{ 1024, 1024 }},
+				zlabel=32,
+				fill=yellow!50,
+				bandfill=red!50,
+				height=8,
+				width={ 8 , 8 },
+				depth=8
+			}
+		};
+
+		\draw[ultra thick] (pool_b4.east) -- (bottleneck.west);
+
+		\pic[right=2.1cm of bottleneck] (unpool_b6) {Box={
+				name=unpool_b6,
+				caption= ,
+				fill=blue!50,
+				opacity=0.5,
+				height=16,
+				width=1,
+				depth=16
+			}
+		};
+
+		\pic[right=0.5cm of unpool_b6] (ccr_res_b6) {RightBandedBox={
+				name=ccr_res_b6,
+				caption= ,
+				xlabel={{ 512, }},
+				zlabel=64,
+				fill=white!50,
+				bandfill=black!50,
+				opacity=0.5,
+				height=16,
+				width=5.0,
+				depth=16
+			}
+		};
+
+		\pic[right=0.5cm of ccr_res_b6] (ccr_b6) {Box={
+				name=ccr_b6,
+				caption= ,
+				xlabel={{512, }},
+				zlabel=64,
+				fill=yellow!50,
+				height=16,
+				width=5.0,
+				depth=16
+			}
+		};
+
+		\pic[right=0.5cm of ccr_b6] (ccr_res_c_b6) {RightBandedBox={
+				name=ccr_res_c_b6,
+				caption= ,
+				xlabel={{ 512, }},
+				zlabel=64,
+				fill=white!50,
+				bandfill=black!50,
+				opacity=0.5,
+				height=16,
+				width=5.0,
+				depth=16
+			}
+		};
+
+		\pic[right=0.5cm of ccr_res_c_b6] (end_b6) {Box={
+				name=end_b6,
+				caption= ,
+				xlabel={{512, }},
+				zlabel=64,
+				fill=yellow!50,
+				height=16,
+				width=5.0,
+				depth=16
+			}
+		};
+
+		\draw[ultra thick] (bottleneck.east) -- (unpool_b6.west);
+
+		\path (ccr_b4.southeast) -- (ccr_b4.northeast) coordinate[pos=1.25] (ccr_b4-top) ;
+		\path (ccr_res_b6.south)  -- (ccr_res_b6.north)  coordinate[pos=1.25] (ccr_res_b6-top) ;
+		\draw[ultra thick, draw=blue!70!red] (ccr_b4.northeast)
+		-- node[above] {\(\rightarrow\)} (ccr_b4-top)
+		-- node[above] {\(\rightarrow\)} (ccr_res_b6-top)
+		-- node[above] {\(\rightarrow\)} (ccr_res_b6.north);
+
+		\pic[right=0.5cm of end_b6] (att5_conv) {Box={
+				name=att5_conv,
+				caption= ,
+				xlabel={{512, }},
+				zlabel=64,
+				fill=yellow!50,
+				height=8,
+				width=8,
+				depth=8
+			}
+		};
+
+		\pic[right=0.5cm of att5_conv] (att5_pool) {Box={
+				name=att5_pool,
+				caption= ,
+				fill=red!50,
+				opacity=0.5,
+				height=8,
+				width=8,
+				depth=8
+			}
+		};
+
+		\draw[ultra thick] (end_b6.east) -- (att5_conv.west);
+
+		\draw[ultra thick] (att5_pool.east) -- (att5_conv.west);
+
+		\pic[right=0.5cm of att5_pool] (softmax) {Box={
+				name=softmax,
+				caption=Softmax,
+				xlabel={{" ","dummy"}},
+				zlabel=10,
+				fill=magenta!50,
+				opacity=0.8,
+				height=2,
+				width=1,
+				depth=2
+			}
+		};
+
+		\draw[ultra thick] (att5_pool.east) -- (softmax.west);
+
+	\end{tikzpicture}
+\end{document}

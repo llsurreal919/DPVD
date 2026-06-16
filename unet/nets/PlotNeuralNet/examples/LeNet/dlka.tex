@@ -1,0 +1,136 @@
+\documentclass[border=8pt, multi, tikz]{standalone}
+\usepackage{import}
+\usepackage{tikz}
+\subimport{E:/UNet_Demo/UNet1/nets/PlotNeuralNet/layers/}{init}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+
+\definecolor{myyellow}{RGB}{255,220,0}
+\definecolor{mygreen}{RGB}{0,176,80}
+\definecolor{myblue}{RGB}{0,112,192}
+\definecolor{mypink}{RGB}{255,182,193}
+
+\begin{document}
+	\begin{tikzpicture}
+		\tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=myblue,opacity=0.7]
+		\tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw=myblue,opacity=0.7]
+		\tikzstyle{block} = [rectangle, draw, fill=myyellow, text centered, minimum height=6em, minimum width=2em]
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% input
+		\pic[shift={(0,0,0)}] at (0,0,0) 
+		{Box={
+				name=input,
+				caption= ,
+				zlabel=Input,
+				fill=mygreen,
+				height=17,
+				width=1,
+				depth=17
+			}
+		};
+		
+		\pic[shift={(3,0,0)}] at (0,0,0) 
+		{Box={
+				name=Conv2D1,
+				caption= ,
+				zlabel=Conv2D,
+				fill=myyellow,
+				height=17,
+				width=0,
+				depth=17
+			}
+		};
+		
+		\pic[shift={(6,0,0)}] at (0,0,0) 
+		{Box={
+				name=GELU,
+				caption= ,
+				zlabel=GELU,
+				fill=myblue, % 不同颜色
+				height=17,
+				width=0,
+				depth=17
+			}
+		};
+		
+		\pic[shift={(9,0,0)}] at (0,0,0)
+		{Box={
+				name=Deform-DW-Conv2D,
+				caption= ,
+				zlabel=Deform-DW,
+				fill=mypink,
+				height=17,
+				width=0,
+				depth=17
+			}
+		};
+		
+		\pic[shift={(12,0,0)}] at (0,0,0)
+		{Box={
+				name=Deform-DW-D Conv2D,
+				caption= ,
+				zlabel=Deform-DW-D,
+				fill=mypink,
+				height=17,
+				width=0,
+				depth=17
+			}
+		};
+		
+		\pic[shift={(15,0,0)}] at (0,0,0) 
+		{Box={
+				name=Conv2D2,
+				caption= ,
+				zlabel=Conv2D,
+				fill=myyellow,
+				height=17,
+				width=0,
+				depth=17
+			}
+		};
+		
+		\pic[shift={(21,0,0)}] at (0,0,0) 
+		{Box={
+				name=Conv2D3,
+				caption= ,
+				zlabel=Conv2D,
+				fill=myyellow,
+				height=17,
+				width=0,
+				depth=17
+			}
+		};
+		
+		\pic[shift={(25,0,0)}] at (0,0,0) 
+		{Box={
+				name=output,
+				caption= ,
+				zlabel=Output,
+				fill=mygreen,
+				height=17,
+				width=1,
+				depth=17
+			}
+		};
+		
+		\node[circle, draw, minimum size=0.6cm](Res) at (18,0) {$*$};
+		
+		\draw [connection]  (input-east)    -- node {\midarrow} (Conv2D1-west);
+		\draw [connection]  (Conv2D1-east)    -- node {\midarrow} (GELU-west);
+		\draw [connection]  (GELU-east)    -- node {\midarrow} (Deform-DW-Conv2D-west); 
+		\draw [connection]  (Deform-DW-Conv2D-east)    -- node {\midarrow} (Deform-DW-D Conv2D-west); 
+		\draw [connection]  (Deform-DW-D Conv2D-east)    -- node {\midarrow} (Conv2D2-west);
+		\draw[connection] (Conv2D2-east) --  node {\midarrow}(Res);
+		\draw[connection] (Res) -- node {\midarrow}(Conv2D3-west);
+		\draw [connection]  (Conv2D3-east)    -- node {\midarrow} (output-west);
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% 添加从 GELU 绕过的残差连接
+		\draw [connection] (GELU-east) -- ++(1,0) -- ++(0,3) -- ++(11,0) -- node
+		{\midarrow} (Res.north);
+		
+		\draw [connection] (input-north) -- ++(0,0) -- ++(0,3) -- ++(23,0)-- node
+		{\midarrow} ++(0,-4.7);
+	\end{tikzpicture}
+\end{document}

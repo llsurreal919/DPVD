@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['vitiligo']
+
+roboflow:
+  workspace: vitiligo
+  project: vitiligo-seg01
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/vitiligo/vitiligo-seg01/dataset/1

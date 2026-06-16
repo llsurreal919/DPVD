@@ -1,0 +1,88 @@
+\documentclass[border=8pt, multi, tikz]{standalone}
+\usepackage{import}
+\usepackage{tikz}
+\subimport{E:/UNet_Demo/UNet1/nets/PlotNeuralNet/layers/}{init}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+
+\definecolor{myyellow}{RGB}{255,220,0}
+\definecolor{mygreen}{RGB}{0,176,80}
+\definecolor{myblue}{RGB}{0,112,192}
+
+\begin{document}
+	\begin{tikzpicture}
+		\tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=black!30,opacity=0.7]
+		\tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw=black!30,opacity=0.7]
+		\tikzstyle{block} = [rectangle, draw, fill=myyellow, text centered, minimum height=6em, minimum width=2em]
+		
+		\pic[shift={(0,0,0)}] at (0,0,0) 
+		{Box={
+				name=input,
+				caption= ,
+				zlabel= N\\Input,
+				fill=mygreen,
+				height=17,
+				width=1,
+				depth=17
+			}
+		};
+		
+		  \pic[shift={(1,0,0)}] at (0,0,0) {
+			Box={
+				name=Conv5×5,
+				caption= ,
+				zlabel=Conv\\5×5 ,
+				fill=blue!30,
+				height=10,
+				width=0,
+				depth=10
+			}
+		};
+		
+		 \pic[shift={(3,0,0)}] at (0,0,0) {
+			Box={
+				name=offsetFiedld,
+				caption= ,
+				zlabel=2N\\offset fiedld ,
+				fill=yellow!30,
+				height=17,
+				width=2,
+				depth=17
+			}
+		};
+		
+		\pic[shift={(4,0,0)}] at (0,0,0) {
+			Box={
+				name=offsets,
+				caption= ,
+				zlabel=offsets ,
+				fill=blue!30,
+				height=10,
+				width=0,
+				depth=10
+			}
+		};
+		
+	\node[circle, draw, minimum size=0.4cm](Res) at (6,0) {$+$};
+		
+	\pic[shift={(9,0,0)}] at (0,0,0) {
+			Box={
+				name=output,
+				caption= ,
+				zlabel=N\\Output ,
+				fill=green!30,
+				height=17,
+				width=1,
+				depth=17
+			}
+		};
+		\draw [connection, color=black]  (input-east)    -- node {\midarrow} (Conv5×5-west);
+		\draw [connection, color=black]  (Conv5×5-east)    -- node {\midarrow} (offsetFiedld-west);
+		\draw [connection, color=black]  (offsetFiedld-east)    -- node {\midarrow} (offsets-west);
+		\draw[connection, color=black] (offsets-east) --  node {\midarrow}(Res);
+		
+		\draw [connection, color=black] (input-north) -- ++(0,1) -- ++(5.9,0) -- node
+		{\midarrow} (Res.north);
+			\draw[connection, color=black] (Res.east) --  node {\midarrow}(output-west);
+	\end{tikzpicture}
+\end{document}
