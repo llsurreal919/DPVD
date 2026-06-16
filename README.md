@@ -8,11 +8,11 @@
 
 DPVD is the first fine-grained, age-stratified dermoscopic image dataset for **pediatric vitiligo diagnosis** (ages 5–12). This repository provides a comprehensive deep learning benchmark covering the complete clinical workflow:
 
-| Task | Model | Performance |
+| Task | Model | Key Metrics |
 |------|-------|-------------|
-| **Classification** (vitiligo vs. non-vitiligo) | Swin Transformer | Accuracy 98.9% |
-| **Detection** (lesion localization) | YOLOv8 | Precision 90.7% |
-| **Segmentation** (lesion boundary delineation) | U-Net (VGG/ResNet) | DICE 94% |
+| **Classification** (vitiligo vs. non-vitiligo) | Swin Transformer + GCE | Acc: 98.9% (Vitiligo 99.0%, Non-Vitiligo 98.6%) |
+| **Detection** (lesion localization) | YOLOv8 + DLKA + WFF + Soft-NMS | mAP@50: 83.5%, Precision: 90.7%, Recall: 73.7% |
+| **Segmentation** (lesion boundary delineation) | U-Net + ECCAM | Dice: 0.94, IoU: 0.89, AUC: 0.99 |
 
 The benchmark forms a progressive diagnostic pipeline: **Classification → Localization → Quantification**.
 
