@@ -1,9 +1,5 @@
 # DPVD: A Dataset and Benchmark for Dermoscopy-based Pediatric Vitiligo Diagnosis
 
-> **Paper:** DPVD: A Dataset and Benchmark for Dermoscopy-based Pediatric Vitiligo Diagnosis  
-> **Authors:** Yue Huang, Zhilin Chen, Shijuan Yu, Kai Zhou, Gang Wang, Xiaoyan Luo, Hua Wang, Yunpeng Xiao, Lei Luo  
-> **Repository:** [github.com/llsurreal919/DPVD](https://github.com/llsurreal919/DPVD)
-
 ## Overview
 
 DPVD is the first fine-grained, age-stratified dermoscopic image dataset for **pediatric vitiligo diagnosis** (ages 5–12). This repository provides a comprehensive deep learning benchmark covering the complete clinical workflow:
