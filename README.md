@@ -41,7 +41,7 @@ DPVD/
 Due to file size constraints, the DPVD dataset and pre-trained model checkpoints are hosted separately.
 
 📥 **Download from Baidu Netdisk:**
-> Link: *(coming soon)*
+> Link:  https://pan.baidu.com/s/1umTlxlphy7AbDe-qYbUy6Q code: 7r5v 
 
 The download package includes:
 - **DPVD Dataset:** Dermoscopic images with expert annotations (classification, detection, segmentation labels)
