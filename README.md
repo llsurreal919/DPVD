@@ -7,8 +7,8 @@ DPVD is the first fine-grained, age-stratified dermoscopic image dataset for **p
 | Task | Model | Key Metrics |
 |------|-------|-------------|
 | **Classification** (vitiligo vs. non-vitiligo) | Swin Transformer + GCE | Acc: 98.9% (Vitiligo 99.0%, Non-Vitiligo 98.6%) |
-| **Detection** (lesion localization) | YOLOv8 + DLKA + WFF + Soft-NMS | mAP@50: 83.5%, Precision: 90.7%, Recall: 73.7% |
-| **Segmentation** (lesion boundary delineation) | U-Net + ECCAM | Dice: 0.94, IoU: 0.89, AUC: 0.99 |
+| **Detection** (lesion localization) | YOLOv8 + DLKA + WFF + Soft-NMS | mAP@50: 82.5%, Precision: 89.7%, Recall: 71.7% |
+| **Segmentation** (lesion boundary delineation) | U-Net + ECCAM | Dice: 0.82, IoU: 0.70, AUC: 0.90 |
 
 The benchmark forms a progressive diagnostic pipeline: **Classification → Localization → Quantification**.
 
